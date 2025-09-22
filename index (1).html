@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Cyberpunk Muhammad Nawa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0d0f1c;
+            color: #b0c4de;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .glowing-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(16, 20, 36, 0.7) 0%, rgba(16, 20, 36, 0.9) 70%, #0d0f1c 100%);
+            z-index: -1;
+            animation: digitalPulse 15s infinite;
+        }
+
+        @keyframes digitalPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 1000px;
+            background-color: rgba(20, 25, 40, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 30px #4d1561, 0 0 15px #6e2794;
+            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
+            border: 2px solid #5a198c;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff, 0 0 10px #00ffff;
+            margin: 0 auto 1rem;
+            transition: transform 0.3s ease-in-out;
+            animation: photoGlitch 1s infinite alternate, photoSlideIn 1.5s ease-out;
+            overflow: hidden;
+            display: block;
+        }
+        
+        @keyframes photoGlitch {
+            0% { border-color: #ff00ff; box-shadow: 0 0 20px #ff00ff, 0 0 10px #00ffff; }
+            50% { border-color: #00ffff; box-shadow: 0 0 20px #00ffff, 0 0 10px #ff00ff; }
+            100% { border-color: #ff00ff; box-shadow: 0 0 20px #ff00ff, 0 0 10px #00ffff; }
+        }
+
+        @keyframes photoSlideIn {
+            from { opacity: 0; transform: translateY(-50px) scale(0.8); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffff;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ff00ff;
+            padding-left: 0.75rem;
+            text-shadow: 0 0 15px #ff00ff;
+            animation: slideInFromLeft 1s ease-out;
+        }
+
+        @keyframes slideInFromLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s;
+            animation: slideInFromRight 1s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes slideInFromRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .list-item:hover {
+            transform: translateX(5px);
+        }
+
+        .list-item-icon {
+            color: #00ffff;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 8px #00ffff);
+        }
+
+        .list-item-text {
+            color: #d1d5db;
+        }
+
+        .badge {
+            background-color: rgba(77, 21, 97, 0.5);
+            color: #d1d5db;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+            border: 1px solid rgba(255, 0, 255, 0.4);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            animation: popIn 0.8s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+            background-color: rgba(77, 21, 97, 0.8);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 0.5rem;
+        }
+
+        .language-button {
+            background-color: rgba(77, 21, 97, 0.3);
+            color: #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            border: 1px solid rgba(255, 0, 255, 0.4);
+        }
+        
+        .language-button:not(.active) {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .language-button.active {
+            background-color: #ff00ff;
+            color: #1f2937;
+            font-weight: 600;
+            animation: none;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+            gap: 1.5rem;
+            animation: chartPopIn 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes chartPopIn {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .chart-container canvas {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .content-columns {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .content-columns {
+                flex-direction: row;
+                gap: 5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen p-4">
+
+    <div class="glowing-background"></div>
+
+    <div class="container relative mx-auto my-8 p-8 md:p-12">
+        <div class="profile-header">
+            <div class="relative w-[150px] h-[150px] mx-auto mb-4">
+                <img src="nawa.img" alt="Foto Profil Muhammad Nawa Dwi Saputra" class="profile-photo absolute inset-0">
+            </div>
+            <h1 class="text-3xl font-bold text-gray-100 mb-1 font-orbitron">Muhammad Nawa Dwi Saputra</h1>
+            <p class="text-lg text-gray-400 font-rajdhani">Pelajar | TKJ Enthusiast</p>
+            <p id="motto" class="text-center text-sm text-gray-500 italic mt-4 font-rajdhani"></p>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button active" onclick="setLanguage('id')">ID</button>
+            <button class="language-button" onclick="setLanguage('en')">EN</button>
+            <button class="language-button" onclick="setLanguage('ar')">عربي</button>
+            <button class="language-button" onclick="setLanguage('jw')">Jowo</button>
+        </div>
+
+        <div id="content" class="content-columns"></div>
+
+    </div>
+
+    <script>
+        const translations = {
+            id: {
+                identityTitle: "Identitas Diri",
+                name: "Nama",
+                dob: "Tempat, Tanggal Lahir",
+                address: "Alamat",
+                gender: "Jenis Kelamin",
+                religion: "Agama",
+                motto: "Kesuksesan besar lahir dari langkah kecil yang konsisten.",
+                educationTitle: "Pendidikan",
+                mi: "MI Samborejo 01",
+                mts: "MTS NU Tirto lulus tahun 2024",
+                smk: "SMK Ma'arif NU Tirto, Jurusan TKJ (Teknik Komputer Jaringan)",
+                currentClass: "Saya sekarang duduk di kelas semester gasal",
+                skillsTitle: "Keterampilan",
+                skill1: "Bisa menginstalasi Debian dan membuat website",
+                skill2: "Bisa desain grafis dengan Canva",
+                skill3: "Memiliki kemampuan berkomunikasi dengan baik",
+                experienceTitle: "Pengalaman",
+                exp1: "Studytour kelas 8 mts",
+                exp2: "Panitia 17 Agustus di desa",
+                citaTitle: "Cita-cita",
+                citaText: "Bos muda",
+                hobbiesTitle: "Hobi",
+                hobiLabel1: "Mancing",
+                hobiLabel2: "Bermain Sepak Bola",
+                hobiLabel3: "Bermain Badminton",
+                hobiDiagramTitle: "Diagram Hobi",
+                dailyActivityTitle: "Rutinitas Harian",
+                schoolLabel: "Sekolah",
+                nyoreLabel: "Nyore",
+                ngajiLabel: "Ngaji",
+                mainhpLabel: "Main HP",
+                dailyDiagramTitle: "Diagram Aktivitas Harian",
+                contactTitle: "Kontak",
+                email: "Email",
+                phone: "Telepon",
+                whatsapp: "Silakan hubungi saya melalui Whatsapp untuk informasi lebih lanjut"
+            },
+            en: {
+                identityTitle: "Personal Datastream",
+                name: "Name",
+                dob: "Place, Date of Birth",
+                address: "Address",
+                gender: "Gender",
+                religion: "Religion",
+                motto: "Great success is born from small, consistent steps.",
+                educationTitle: "Cyber-Education Record",
+                mi: "MI Samborejo 01",
+                mts: "MTS NU Tirto graduated in 2024",
+                smk: "SMK Ma'arif NU Tirto, TKJ Major (Computer Network Engineering)",
+                currentClass: "I am currently in the odd semester class",
+                skillsTitle: "Tech Proficiency",
+                skill1: "Can install Debian and create websites",
+                skill2: "Can do graphic design with Canva",
+                skill3: "Has good communication skills",
+                experienceTitle: "Digital Experiences",
+                exp1: "1st place in a drawing competition in my village",
+                exp2: "Committee member for the August 17th celebration in my village",
+                citaTitle: "Future Protocol",
+                citaText: "Young boss",
+                hobbiesTitle: "Offline Hobbies",
+                hobiLabel1: "Fishing",
+                hobiLabel2: "Playing Soccer",
+                hobiLabel3: "Playing Badminton",
+                hobiDiagramTitle: "Hobbies Diagram",
+                dailyActivityTitle: "Daily Routines",
+                schoolLabel: "School",
+                nyoreLabel: "Afternoon Activities",
+                ngajiLabel: "Reciting Quran",
+                mainhpLabel: "Playing on Phone",
+                dailyDiagramTitle: "Daily Activity Diagram",
+                contactTitle: "Contact Node",
+                email: "Email",
+                phone: "Phone",
+                whatsapp: "Please contact me via WhatsApp for more information"
+            },
+            ar: {
+                identityTitle: "الهوية الشخصية",
+                name: "الاسم",
+                dob: "مكان وتاريخ الميلاد",
+                address: "العنوان",
+                gender: "الجنس",
+                religion: "الديانة",
+                motto: "النجاح العظيم يولد من خطوات صغيرة ومستمرة.",
+                educationTitle: "التعليم",
+                mi: "المدرسة الإسلامية سامبوريجو 01",
+                mts: "المدرسة المتوسطة نُع تيرتو تخرج عام 2024",
+                smk: "المدرسة المهنية المعارف نُع تيرتو، تخصص هندسة شبكات الحاسوب",
+                currentClass: "أنا الآن في فصل الفصل الدراسي الأول",
+                skillsTitle: "المهارات",
+                skill1: "يمكنه تثبيت نظام دبيان وإنشاء مواقع الويب",
+                skill2: "يتقن التصميم الجرافيكي ببرنامج كانفا",
+                skill3: "يتمتع بمهارات تواصل جيدة",
+                experienceTitle: "الخبرة",
+                exp1: "المركز الأول في مسابقة الرسم في قريتي",
+                exp2: "عضو لجنة تنظيم احتفالات 17 أغسطس في قريتي",
+                citaTitle: "الطموحات",
+                citaText: "رئيس شاب",
+                hobbiesTitle: "الهوايات",
+                hobiLabel1: "صيد السمك",
+                hobiLabel2: "لعب كرة القدم",
+                hobiLabel3: "لعب كرة الريشة",
+                hobiDiagramTitle: "مخطط الهوايات",
+                dailyActivityTitle: "الأنشطة الروتينية اليومية",
+                schoolLabel: "المدرسة",
+                nyoreLabel: "أنشطة بعد الظهر",
+                ngajiLabel: "قراءة القرآن",
+                mainhpLabel: "اللعب بالهاتف",
+                dailyDiagramTitle: "مخطط الأنشطة اليومية",
+                contactTitle: "الاتصال",
+                email: "البريد الإلكتروني",
+                phone: "الهاتف",
+                whatsapp: "الرجاء الاتصال بي عبر الواتساب لمزيد من المعلومات"
+            },
+            jw: {
+                identityTitle: "Identitas Diri",
+                name: "Jeneng",
+                dob: "Panggonan, Tanggal Lair",
+                address: "Alamat",
+                gender: "Jenis Kelamin",
+                religion: "Agama",
+                motto: "Sukses gedhe lair saka langkah cilik sing konsisten.",
+                educationTitle: "Pendidikan",
+                mi: "MI Samborejo 01",
+                mts: "MTS NU Tirto lulus taun 2024",
+                smk: "SMK Ma'arif NU Tirto, Jurusan TKJ (Teknik Komputer Jaringan)",
+                currentClass: "Saiki aku lungguh ing kelas semester gasal",
+                skillsTitle: "Katrampilan",
+                skill1: "Bisa nginstal Debian lan nggawe website",
+                skill2: "Bisa desain grafis nganggo Canva",
+                skill3: "Duwe katrampilan komunikasi sing apik",
+                experienceTitle: "Pengalaman",
+                exp1: "Dolanan kelas 8 mts",
+                exp2: "Panitia 17 Agustus ing desaku",
+                citaTitle: "Gegayuhan",
+                citaText: "Bos enom",
+                hobbiesTitle: "Hobi",
+                hobiLabel1: "Mancing",
+                hobiLabel2: "Dolanan Bal-balan",
+                hobiLabel3: "Dolanan Badminton",
+                hobiDiagramTitle: "Diagram Hobi",
+                dailyActivityTitle: "Rutingan Saben Dina",
+                schoolLabel: "Sekolah",
+                nyoreLabel: "Nyore",
+                ngajiLabel: "Ngaji",
+                mainhpLabel: "Dolanan HP",
+                dailyDiagramTitle: "Diagram Rutingan Saben Dina",
+                contactTitle: "Kontak",
+                email: "Email",
+                phone: "Telepon",
+                whatsapp: "Mangga hubungi kula liwat Whatsapp kangge informasi luwih lengkap"
+            }
+        };
+
+        const data = {
+            name: "Muhammad Nawa Dwi Saputra",
+            dob: "Pekalongan, 15 September 2008",
+            address: "Samborejo RT5 RW2",
+            gender: "Laki-laki",
+            religion: "Islam",
+            email: "nawamytrxs@gmail.com",
+            phone: "085743674463"
+        };
+
+        let myPieChart = null;
+        let myHobbyPieChart = null;
+
+        const hobbyPercentages = [50, 25, 25];
+        const activityData = [50, 10, 10, 30];
+
+        function setLanguage(lang) {
+            const contentDiv = document.getElementById('content');
+            const langData = translations[lang];
+
+            if (myPieChart) myPieChart.destroy();
+            if (myHobbyPieChart) myHobbyPieChart.destroy();
+
+            contentDiv.style.opacity = 0;
+
+            setTimeout(() => {
+                contentDiv.innerHTML = `
+                    <div class="md:w-1/2">
+                        <!-- Identitas Diri -->
+                        <h2 class="section-title" id="identityTitle">${langData.identityTitle}</h2>
+                        <div class="space-y-2">
+                            <div class="list-item" style="animation-delay: 0.1s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.name}:</strong> ${data.name}</p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 0.2s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.dob}:</strong> ${data.dob}</p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 0.3s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.address}:</strong> ${data.address}</p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 0.4s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 0a6.002 6.002 0 010 8.485m0-8.485L5.636 18.364m0 0A6.002 6.002 0 013.27 15.636M21.121 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.gender}:</strong> ${data.gender}</p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 0.5s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.religion}:</strong> ${data.religion}</p>
+                            </div>
+                        </div>
+
+                        <!-- Pendidikan -->
+                        <h2 class="section-title" id="educationTitle">${langData.educationTitle}</h2>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400">
+                            <li class="list-item" style="animation-delay: 0.6s;">${langData.mi}</li>
+                            <li class="list-item" style="animation-delay: 0.7s;">${langData.mts}</li>
+                            <li class="list-item" style="animation-delay: 0.8s;">${langData.smk}</li>
+                            <li class="list-item" style="animation-delay: 0.9s;">${langData.currentClass}</li>
+                        </ul>
+
+                        <!-- Keterampilan -->
+                        <h2 class="section-title" id="skillsTitle">${langData.skillsTitle}</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="badge" style="animation-delay: 1.0s;">${langData.skill1}</span>
+                            <span class="badge" style="animation-delay: 1.1s;">${langData.skill2}</span>
+                            <span class="badge" style="animation-delay: 1.2s;">${langData.skill3}</span>
+                        </div>
+
+                        <!-- Pengalaman -->
+                        <h2 class="section-title" id="experienceTitle">${langData.experienceTitle}</h2>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400">
+                            <li class="list-item" style="animation-delay: 1.3s;">${langData.exp1}</li>
+                            <li class="list-item" style="animation-delay: 1.4s;">${langData.exp2}</li>
+                        </ul>
+
+                        <!-- Cita-cita -->
+                        <h2 class="section-title" id="citaTitle">${langData.citaTitle}</h2>
+                        <p class="text-lg text-gray-400 font-medium list-item" style="animation-delay: 1.5s;">${langData.citaText}</p>
+                    </div>
+
+                    <div class="md:w-1/2">
+                        <!-- Hobi -->
+                        <h2 class="section-title" id="hobbiesTitle">${langData.hobbiesTitle}</h2>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400">
+                            <li class="list-item" style="animation-delay: 1.6s;">${langData.hobiLabel1}</li>
+                            <li class="list-item" style="animation-delay: 1.7s;">${langData.hobiLabel2}</li>
+                            <li class="list-item" style="animation-delay: 1.8s;">${langData.hobiLabel3}</li>
+                        </ul>
+
+                        <!-- Diagram Hobi -->
+                        <h2 class="section-title" id="hobiDiagramTitle">${langData.hobiDiagramTitle}</h2>
+                        <div class="chart-container">
+                            <div>
+                                <h3 class="text-center font-bold text-gray-300">Diagram Lingkaran Hobi</h3>
+                                <canvas id="hobbyPieChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Rutinitas Harian -->
+                        <h2 class="section-title" id="dailyActivityTitle">${langData.dailyActivityTitle}</h2>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400">
+                            <li class="list-item" style="animation-delay: 1.9s;">${langData.schoolLabel}</li>
+                            <li class="list-item" style="animation-delay: 2.0s;">${langData.nyoreLabel}</li>
+                            <li class="list-item" style="animation-delay: 2.1s;">${langData.ngajiLabel}</li>
+                            <li class="list-item" style="animation-delay: 2.2s;">${langData.mainhpLabel}</li>
+                        </ul>
+
+                        <!-- Diagram Aktivitas Harian -->
+                        <h2 class="section-title" id="dailyDiagramTitle">${langData.dailyDiagramTitle}</h2>
+                        <div class="chart-container">
+                            <div>
+                                <h3 class="text-center font-bold text-gray-300">Diagram Lingkaran Aktivitas Harian</h3>
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Kontak -->
+                        <h2 class="section-title" id="contactTitle">${langData.contactTitle}</h2>
+                        <div class="space-y-2">
+                            <div class="list-item" style="animation-delay: 2.3s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-17 4h18a2 2 0 012 2v6a2 2 0 01-2 2H3a2 2 0 01-2-2v-6a2 2 0 012-2z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.email}:</strong> <a href="mailto:${data.email}" class="text-gray-200 hover:underline">${data.email}</a></p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 2.4s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">${langData.phone}:</strong> <a href="tel:${data.phone}" class="text-gray-200 hover:underline">${data.phone}</a></p>
+                            </div>
+                            <div class="list-item" style="animation-delay: 2.5s;">
+                                <svg class="list-item-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                <p class="list-item-text"><strong class="font-semibold">Whatsapp:</strong> <a href="https://wa.me/6285743674463" class="text-gray-200 hover:underline">${langData.whatsapp}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                contentDiv.style.opacity = 1;
+
+                const activityLabels = [langData.schoolLabel, langData.nyoreLabel, langData.ngajiLabel, langData.mainhpLabel];
+                createPieChart('pieChart', activityLabels, activityData);
+
+                const hobiLabels = [langData.hobiLabel1, langData.hobiLabel2, langData.hobiLabel3];
+                createPieChart('hobbyPieChart', hobiLabels, hobbyPercentages);
+            }, 500);
+
+            document.querySelectorAll('.language-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.language-button[onclick="setLanguage('${lang}')"]`).classList.add('active');
+            document.getElementById('motto').innerText = langData.motto;
+        }
+
+        function createPieChart(canvasId, labels, data) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Persentase',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(0, 255, 255, 0.8)',
+                            'rgba(255, 0, 255, 0.8)',
+                            'rgba(255, 255, 0, 0.8)',
+                            'rgba(102, 255, 0, 0.8)'
+                        ],
+                        borderColor: [
+                            '#00ffff',
+                            '#ff00ff',
+                            '#ffff00',
+                            '#66ff00'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#b0c4de',
+                            }
+                        },
+                        datalabels: {
+                            color: '#0d0f1c',
+                            formatter: (value, context) => {
+                                const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                const percentage = (value / total * 100);
+                                return percentage.toFixed(0) + '%';
+                            },
+                            font: {
+                                weight: 'bold',
+                                size: 12,
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (canvasId === 'pieChart') {
+                myPieChart = chart;
+            } else if (canvasId === 'hobbyPieChart') {
+                myHobbyPieChart = chart;
+            }
+        }
+
+        window.onload = function() {
+            setLanguage('id');
+        };
+    </script>
+</body>
+</html>
